@@ -24,6 +24,7 @@ public class UserInterface {
                 7 - List ALL vehicles
                 8 - Add a vehicle
                 9 - Remove a vehicle
+                10 - Sell/Lease a Vehicle
                 99 - Quit
 
                 >>>\s""";
@@ -44,6 +45,7 @@ public class UserInterface {
                 case 7 -> processGetAllVehiclesRequest();
                 case 8 -> processAddVehicleRequest();
                 case 9 -> processRemoveVehicleRequest();
+                case 10 -> processSellLeaseRequest();
                 case 99 -> System.exit(0);
                 default -> System.out.println("Invalid selection. Please try again.");
             }
@@ -53,13 +55,7 @@ public class UserInterface {
 
     }
 
-    private void processRemoveVehicleRequest() {
-        String make = Console.PromptForString("Enter make: ");
-        String model = Console.PromptForString("Enter model: ");
-        String color = Console.PromptForString("Enter color:  ");
-        Vehicle v = new Vehicle(make, model, color);
-        currentDealership.removeVehicleFromInventory(v);
-        DealershipFileManager.saveToCSV(currentDealership,filename);
+    private void processSellLeaseRequest() {
     }
 
 
@@ -80,12 +76,18 @@ public class UserInterface {
         DealershipFileManager.saveToCSV(currentDealership, filename);
 
     }
+    private void processRemoveVehicleRequest() {
+        int vin = Console.PromptForInt("Enter vin number of the vehicle you want to remove: ");
+        currentDealership.removeVehicleFromInventory(vin);
 
-    private void processGetByVehicleTypeRequest() {
-        String type = Console.PromptForString("Enter type: ");
-        for(Vehicle v : currentDealership.getVehicleByType(type));
-        displayVehicle(v);
     }
+        private void processGetByVehicleTypeRequest () {
+            String type = Console.PromptForString("Enter what type of vehicle you are looking for: ");
+            for (Vehicle v : currentDealership.getVehiclesByType(type)) {
+                displayVehicle(v);
+            }
+
+        }
     private void processGetByMileageRequest() {
         int min = Console.PromptForInt("Enter Min Miles: ");
         int max = Console.PromptForInt("Enter Max Miles: ");

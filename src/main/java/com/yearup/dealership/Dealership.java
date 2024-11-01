@@ -56,6 +56,11 @@ public class Dealership {
         inventory.remove(vehicleToRemove);
     }
 
+    public void removeVehicleFromInventory(int vin){
+        Vehicle vehicleToRemove = this.getVehicleByVIN(vin);
+        inventory.remove(vehicleToRemove);
+    }
+
     public ArrayList<Vehicle> getVehiclesByPrice(double min, double max) {
         ArrayList<Vehicle> result = new ArrayList<Vehicle>();
         for (Vehicle v : this.inventory) {
@@ -110,16 +115,28 @@ public class Dealership {
         }
         return result;
     }
-    public ArrayList<Vehicle>getVehicleByType(String type){
+    public ArrayList<Vehicle> getVehiclesByType(String vehicleType){
         ArrayList<Vehicle> result = new ArrayList<Vehicle>();
-        for (Vehicle v : this.inventory) {
-            if (v.getVehicleType().equalsIgnoreCase(type)) {
+        for(Vehicle v : this.inventory){
+            if(v.getVehicleType().equalsIgnoreCase(vehicleType)){
                 result.add(v);
             }
         }
         return result;
     }
+
+    public Vehicle getVehicleByVIN(int vin){
+
+        for (Vehicle vehicle : this.getInventory()) {
+            if (vehicle.getVin() == vin) {
+                return vehicle;
+            }
+        }
+        return null;
     }
+
+
+}
 
 
 
